@@ -10,10 +10,9 @@ request = request_session.get(url, headers=headers)
 
 soup = BeautifulSoup(request.content, 'lxml')
 table = soup.find('table')
+data = table.find_all('td')
+count = table.find_all('tr')
 
-dates = table.find_all('td', {'class':'first'})
-temps = table.find_all('td', {'class':'first_in_group positive'})
-winds = table.find_all('span')
 
-for i in range(len(dates)):
-    print(dates[i].text, temps[i*2].text, winds[i*2].text, temps[i*2+1].text, winds[i*2+1].text)
+for i in range(len(count)-2):
+    print("{} октября: день - {}°С, {}мм рт ст, ветер {}; вечер - {}°С, {}мм рт ст, ветер {};".format(data[i*11].text, data[i*11+1].text, data[i*11+2].text, data[i*11+5].text, data[i*11+6].text, data[i*11+7].text, data[i*11+10].text))
